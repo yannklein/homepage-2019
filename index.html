@@ -377,8 +377,9 @@
     //    Event listeners
     //////////////////////////////////////////////////////////////////////////////////
     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-    document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+    document.addEventListener( 'touchstart', onDocumentMouseDown, false );
     document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    document.addEventListener( 'touchmove' , onDocumentMouseMove, false );
 
     </script>
   </body>
