@@ -310,7 +310,6 @@
     const onDocumentMouseDown = ( event ) => {
 
       let ray = new THREE.Raycaster();
-      event.preventDefault();
       ray.setFromCamera( mouse, camera );
       let fbIntersectsHover = ray.intersectObjects([scene.getObjectByName( "fbBbox" )]);
       let lkdIntersectsHover = ray.intersectObjects([scene.getObjectByName( "lkdBbox" )]);
