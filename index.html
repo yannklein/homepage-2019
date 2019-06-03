@@ -67,6 +67,12 @@
       }
       scene.add(camera);
 
+      //Control for mobile devices
+      controls = new THREE.OrbitControls( camera, renderer.domElement );
+      if(window.screen.width <= 500){
+        controls.update();
+      }
+
       // create lights
       light = new THREE.AmbientLight( 0xffffff ); // soft white light
       light.intensity = 0.7;
@@ -157,6 +163,11 @@
 
          //handle hover events
          hover();
+
+         //control for mobiles
+        if(window.screen.width <= 500){
+          controls.update();
+        }
 
         // render the scene
         renderer.render( scene, camera );
