@@ -60,7 +60,7 @@
       // create a camera
       camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1500 );
       camera.position.set( 0, 1, 5 );
-      console.log(camera);
+      // console.log(camera);
       if(window.screen.width <= 500){
         camera.position.set( 0, 0, 5 );
         camera.scale.set(1,1,0.65);
@@ -97,7 +97,7 @@
 
       let geometrySphere = new THREE.SphereGeometry( 20, 12, 6 );
       let materialSphere = new THREE.MeshPhongMaterial({
-        color: new THREE.Color("rbga(255,255,255,0.1)")
+        color: new THREE.Color(1, 1, 1)
       });
       materialSphere.side = THREE.DoubleSide;
       let sphere = new THREE.Mesh( geometrySphere, materialSphere );
@@ -110,7 +110,7 @@
       createText( "I am", textX, textY, -3, 6, 0xCCCCCC, "iam", all );
       createText( "Yann", textX + 1.4, textY - 0.06, -3, 7, 0x000000, "yann", all );
       createText( "I am all about discovering, innovating and empowering people around me.", textX, textY - 0.5, -3, 2, 0x444444, "intro1", all );
-      createText( "I also love Web XR, tech devices and I recently got a swoft spot for AI.", textX, textY - 0.8, -3, 2, 0x444444, "intro2", all );
+      createText( "I also love Web XR, tech devices and I recently got a soft spot for AI.", textX, textY - 0.8, -3, 2, 0x444444, "intro2", all );
       createText( "Meet me on                 and               .", textX, textY - 1.1, -3, 2, 0x444444, "intro3", all );
       createText( "Or enjoy some of my work        .", textX, textY - 1.4, -3, 2, 0x444444, "intro4", all );
       createText( "Facebook", textX + 1.2, textY - 1.1, -3, 2, 0x3E92CC, "fb", all );
@@ -158,10 +158,11 @@
 
         //launch the opening
 
-         if(loaded){ openingAnimation()};
-
-         //handle hover events
-         hover();
+         if(loaded){
+          openingAnimation()
+          // handle hover events
+          hover(scene);
+        }
 
          //control for mobiles
         if(window.screen.width <= 500){
@@ -192,7 +193,7 @@
     const createText = (myText, x, y, z, size, color, objectName, scene) => {
       let fontloader = new THREE.FontLoader();
       let textMesh = new THREE.Mesh();
-      fontloader.load( 'lib/optimer_regular.typeface.json', function ( font ) {
+      fontloader.load( './lib/optimer_regular.typeface.json', function ( font ) {
         let text = myText;
         // text divider
         // let hash = document.location.hash.substr( 1 );
@@ -355,7 +356,7 @@
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
 
-  const hover = () => {
+  const hover = (myScene) => {
     // find intersections
 
     // create a Ray with origin at the mouse position
@@ -365,20 +366,22 @@
     let ray = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
 
     // create an array containing all objects in the scene with which the ray intersects
-    let fbIntersectsHover = ray.intersectObjects([scene.getObjectByName( "fbBbox" )]);
-    let lkdIntersectsHover = ray.intersectObjects([scene.getObjectByName( "lkdBbox" )]);
-    let hereIntersectsHover = ray.intersectObjects([scene.getObjectByName( "hereBbox" )]);
+    if (typeof myScene != "undefined"){
+      let fbIntersectsHover = ray.intersectObjects([myScene.getObjectByName( "fbBbox" )]);
+      let lkdIntersectsHover = ray.intersectObjects([myScene.getObjectByName( "lkdBbox" )]);
+      let hereIntersectsHover = ray.intersectObjects([myScene.getObjectByName( "hereBbox" )]);
 
-    // INTERSECTED = the object in the scene currently closest to the camera
-    //    and intersected by the Ray projected from the mouse position
+      // INTERSECTED = the object in the scene currently closest to the camera
+      //    and intersected by the Ray projected from the mouse position
 
-    if ( fbIntersectsHover.length > 0) { scene.getObjectByName( "fb" ).material[0].color.setHex(0xC2AFF0); }
-    else if ( lkdIntersectsHover.length > 0) { scene.getObjectByName( "lkd" ).material[0].color.setHex(0xC2AFF0); }
-    else if ( hereIntersectsHover.length > 0) { scene.getObjectByName( "here" ).material[0].color.setHex(0xC2AFF0); }
-    else {
-      scene.getObjectByName( "fb" ).material[0].color.setHex(0x3E92CC);
-      scene.getObjectByName( "lkd" ).material[0].color.setHex(0x3E92CC);
-      scene.getObjectByName( "here" ).material[0].color.setHex(0x3E92CC);
+      if ( fbIntersectsHover.length > 0) { myScene.getObjectByName( "fb" ).material[0].color.setHex(0xC2AFF0); }
+      else if ( lkdIntersectsHover.length > 0) { myScene.getObjectByName( "lkd" ).material[0].color.setHex(0xC2AFF0); }
+      else if ( hereIntersectsHover.length > 0) { myScene.getObjectByName( "here" ).material[0].color.setHex(0xC2AFF0); }
+      else {
+        myScene.getObjectByName( "fb" ).material[0].color.setHex(0x3E92CC);
+        myScene.getObjectByName( "lkd" ).material[0].color.setHex(0x3E92CC);
+        myScene.getObjectByName( "here" ).material[0].color.setHex(0x3E92CC);
+      }
     }
   }
 
