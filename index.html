@@ -134,8 +134,8 @@
       onRenderFcts.push(function(){
 
         //spotlight movement
-        spotLight.target.position.y = mouse.y * 8;
-        spotLight.target.position.x = mouse.x * 8;
+        spotLight.target.position.y = mouse.y * 6 + 1;
+        spotLight.target.position.x = mouse.x * 6 - 1.7;
 
         // camera moving according to cursor position
         let newCameraX = camera.position.x - ( mouseX - camera.position.x ) * .00001;
@@ -349,7 +349,7 @@
     };
 
     const onDocumentMouseMove = ( event ) => {
-        mouseX = ( event.clientX - windowHalfX ) * 0.3;
+        mouseX = ( event.clientX - windowHalfX ) * 0.2;
         mouseY = ( event.clientY - windowHalfY ) * 0.3;
 
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
